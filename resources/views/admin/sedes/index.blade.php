@@ -22,9 +22,6 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.sede.fields.id') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.sede.fields.sede') }}
                     </th>
                     <th>
@@ -83,12 +80,11 @@
     ajax: "{{ route('admin.sedes.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'sede', name: 'sede' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-Sede').DataTable(dtOverrideGlobals);

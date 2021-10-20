@@ -40,9 +40,6 @@ class EstadoController extends Controller
             ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('estado', function ($row) {
                 return $row->estado ? $row->estado : '';
             });

@@ -55,20 +55,59 @@
                 <span class="help-block">{{ trans('cruds.fichasTecnica.fields.sede_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="componentes">{{ trans('cruds.fichasTecnica.fields.componentes') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                <div class="form-check {{ $errors->has('teclado') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="teclado" value="0">
+                    <input class="form-check-input" type="checkbox" name="teclado" id="teclado" value="1" {{ $fichasTecnica->teclado || old('teclado', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="teclado">{{ trans('cruds.fichasTecnica.fields.teclado') }}</label>
                 </div>
-                <select class="form-control select2 {{ $errors->has('componentes') ? 'is-invalid' : '' }}" name="componentes[]" id="componentes" multiple>
-                    @foreach($componentes as $id => $componente)
-                        <option value="{{ $id }}" {{ (in_array($id, old('componentes', [])) || $fichasTecnica->componentes->contains($id)) ? 'selected' : '' }}>{{ $componente }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('componentes'))
-                    <span class="text-danger">{{ $errors->first('componentes') }}</span>
+                @if($errors->has('teclado'))
+                    <span class="text-danger">{{ $errors->first('teclado') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.componentes_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.teclado_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('mouse') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="mouse" value="0">
+                    <input class="form-check-input" type="checkbox" name="mouse" id="mouse" value="1" {{ $fichasTecnica->mouse || old('mouse', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="mouse">{{ trans('cruds.fichasTecnica.fields.mouse') }}</label>
+                </div>
+                @if($errors->has('mouse'))
+                    <span class="text-danger">{{ $errors->first('mouse') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.mouse_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('parlantes') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="parlantes" value="0">
+                    <input class="form-check-input" type="checkbox" name="parlantes" id="parlantes" value="1" {{ $fichasTecnica->parlantes || old('parlantes', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="parlantes">{{ trans('cruds.fichasTecnica.fields.parlantes') }}</label>
+                </div>
+                @if($errors->has('parlantes'))
+                    <span class="text-danger">{{ $errors->first('parlantes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.parlantes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('camara') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="camara" value="0">
+                    <input class="form-check-input" type="checkbox" name="camara" id="camara" value="1" {{ $fichasTecnica->camara || old('camara', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="camara">{{ trans('cruds.fichasTecnica.fields.camara') }}</label>
+                </div>
+                @if($errors->has('camara'))
+                    <span class="text-danger">{{ $errors->first('camara') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.camara_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('telefono_ip') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="telefono_ip" value="0">
+                    <input class="form-check-input" type="checkbox" name="telefono_ip" id="telefono_ip" value="1" {{ $fichasTecnica->telefono_ip || old('telefono_ip', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="telefono_ip">{{ trans('cruds.fichasTecnica.fields.telefono_ip') }}</label>
+                </div>
+                @if($errors->has('telefono_ip'))
+                    <span class="text-danger">{{ $errors->first('telefono_ip') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.telefono_ip_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="observaciones">{{ trans('cruds.fichasTecnica.fields.observaciones') }}</label>
@@ -77,42 +116,6 @@
                     <span class="text-danger">{{ $errors->first('observaciones') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.fichasTecnica.fields.observaciones_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="mantenimiento_preventivo">{{ trans('cruds.fichasTecnica.fields.mantenimiento_preventivo') }}</label>
-                <input class="form-control date {{ $errors->has('mantenimiento_preventivo') ? 'is-invalid' : '' }}" type="text" name="mantenimiento_preventivo" id="mantenimiento_preventivo" value="{{ old('mantenimiento_preventivo', $fichasTecnica->mantenimiento_preventivo) }}">
-                @if($errors->has('mantenimiento_preventivo'))
-                    <span class="text-danger">{{ $errors->first('mantenimiento_preventivo') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.mantenimiento_preventivo_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="mantenimiento_correctivo">{{ trans('cruds.fichasTecnica.fields.mantenimiento_correctivo') }}</label>
-                <input class="form-control date {{ $errors->has('mantenimiento_correctivo') ? 'is-invalid' : '' }}" type="text" name="mantenimiento_correctivo" id="mantenimiento_correctivo" value="{{ old('mantenimiento_correctivo', $fichasTecnica->mantenimiento_correctivo) }}">
-                @if($errors->has('mantenimiento_correctivo'))
-                    <span class="text-danger">{{ $errors->first('mantenimiento_correctivo') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.mantenimiento_correctivo_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="descripcion_del_mantenimiento">{{ trans('cruds.fichasTecnica.fields.descripcion_del_mantenimiento') }}</label>
-                <textarea class="form-control {{ $errors->has('descripcion_del_mantenimiento') ? 'is-invalid' : '' }}" name="descripcion_del_mantenimiento" id="descripcion_del_mantenimiento">{{ old('descripcion_del_mantenimiento', $fichasTecnica->descripcion_del_mantenimiento) }}</textarea>
-                @if($errors->has('descripcion_del_mantenimiento'))
-                    <span class="text-danger">{{ $errors->first('descripcion_del_mantenimiento') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.descripcion_del_mantenimiento_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="quien_lo_realiza_id">{{ trans('cruds.fichasTecnica.fields.quien_lo_realiza') }}</label>
-                <select class="form-control select2 {{ $errors->has('quien_lo_realiza') ? 'is-invalid' : '' }}" name="quien_lo_realiza_id" id="quien_lo_realiza_id" required>
-                    @foreach($quien_lo_realizas as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('quien_lo_realiza_id') ? old('quien_lo_realiza_id') : $fichasTecnica->quien_lo_realiza->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('quien_lo_realiza'))
-                    <span class="text-danger">{{ $errors->first('quien_lo_realiza') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.fichasTecnica.fields.quien_lo_realiza_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required">{{ trans('cruds.fichasTecnica.fields.estado_del_activo') }}</label>

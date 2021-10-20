@@ -22,9 +22,6 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.estado.fields.id') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.estado.fields.estado') }}
                     </th>
                     <th>
@@ -83,12 +80,11 @@
     ajax: "{{ route('admin.estados.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'estado', name: 'estado' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-Estado').DataTable(dtOverrideGlobals);

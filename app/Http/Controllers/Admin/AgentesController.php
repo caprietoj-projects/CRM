@@ -40,9 +40,6 @@ class AgentesController extends Controller
             ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('nombre', function ($row) {
                 return $row->nombre ? $row->nombre : '';
             });
@@ -92,6 +89,8 @@ class AgentesController extends Controller
     public function show(Agente $agente)
     {
         abort_if(Gate::denies('agente_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $agente->load('quienLoRealizaMaintenances');
 
         return view('admin.agentes.show', compact('agente'));
     }

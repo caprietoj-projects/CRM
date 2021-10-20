@@ -22,9 +22,6 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.agente.fields.id') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.agente.fields.nombre') }}
                     </th>
                     <th>
@@ -89,14 +86,13 @@
     ajax: "{{ route('admin.agentes.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'nombre', name: 'nombre' },
 { data: 'cargo', name: 'cargo' },
 { data: 'correo', name: 'correo' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-Agente').DataTable(dtOverrideGlobals);

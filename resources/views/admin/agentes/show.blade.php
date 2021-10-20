@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.agente.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $agente->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.agente.fields.nombre') }}
                         </th>
                         <td>
@@ -58,6 +50,22 @@
     </div>
 </div>
 
-
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#quien_lo_realiza_maintenances" role="tab" data-toggle="tab">
+                {{ trans('cruds.maintenance.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="quien_lo_realiza_maintenances">
+            @includeIf('admin.agentes.relationships.quienLoRealizaMaintenances', ['maintenances' => $agente->quienLoRealizaMaintenances])
+        </div>
+    </div>
+</div>
 
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyEmpleoRequest;
 use App\Http\Requests\StoreEmpleoRequest;
@@ -12,18 +13,61 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class EmpleosController extends Controller
 {
     use MediaUploadingTrait;
+    use CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('empleo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleos = Empleo::all();
+        if ($request->ajax()) {
+            $query = Empleo::with(['created_by'])->select(sprintf('%s.*', (new Empleo())->table));
+            $table = Datatables::of($query);
 
-        return view('admin.empleos.index', compact('empleos'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'empleo_show';
+                $editGate = 'empleo_edit';
+                $deleteGate = 'empleo_delete';
+                $crudRoutePart = 'empleos';
+
+                return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
+            });
+
+            $table->editColumn('vacante', function ($row) {
+                return $row->vacante ? $row->vacante : '';
+            });
+            $table->editColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : '';
+            });
+            $table->editColumn('tiempo', function ($row) {
+                return $row->tiempo ? $row->tiempo : '';
+            });
+            $table->editColumn('salario', function ($row) {
+                return $row->salario ? $row->salario : '';
+            });
+            $table->editColumn('empresa', function ($row) {
+                return $row->empresa ? $row->empresa : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.empleos.index');
     }
 
     public function create()
@@ -48,6 +92,8 @@ class EmpleosController extends Controller
     {
         abort_if(Gate::denies('empleo_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $empleo->load('created_by');
+
         return view('admin.empleos.edit', compact('empleo'));
     }
 
@@ -61,6 +107,8 @@ class EmpleosController extends Controller
     public function show(Empleo $empleo)
     {
         abort_if(Gate::denies('empleo_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $empleo->load('created_by');
 
         return view('admin.empleos.show', compact('empleo'));
     }

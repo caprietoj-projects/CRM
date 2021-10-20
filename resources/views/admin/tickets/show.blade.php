@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.ticket.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $ticket->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.ticket.fields.nombre') }}
                         </th>
                         <td>
@@ -85,18 +77,26 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.ticket.fields.id_estado') }}
-                        </th>
-                        <td>
-                            {{ $ticket->id_estado->estado ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.ticket.fields.id_asignado') }}
                         </th>
                         <td>
                             {{ $ticket->id_asignado->nombre ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.ticket.fields.solucion') }}
+                        </th>
+                        <td>
+                            {!! $ticket->solucion !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.ticket.fields.estado') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Ticket::ESTADO_RADIO[$ticket->estado] ?? '' }}
                         </td>
                     </tr>
                 </tbody>

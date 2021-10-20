@@ -9,7 +9,7 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -81,19 +81,157 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('imprimirmtos/destroy', 'ImprimirmtoController@massDestroy')->name('imprimirmtos.massDestroy');
     Route::resource('imprimirmtos', 'ImprimirmtoController');
 
-    // Hojas De Vida Mantenimiento
-    Route::delete('hojas-de-vida-mantenimientos/destroy', 'HojasDeVidaMantenimientoController@massDestroy')->name('hojas-de-vida-mantenimientos.massDestroy');
-    Route::post('hojas-de-vida-mantenimientos/parse-csv-import', 'HojasDeVidaMantenimientoController@parseCsvImport')->name('hojas-de-vida-mantenimientos.parseCsvImport');
-    Route::post('hojas-de-vida-mantenimientos/process-csv-import', 'HojasDeVidaMantenimientoController@processCsvImport')->name('hojas-de-vida-mantenimientos.processCsvImport');
-    Route::resource('hojas-de-vida-mantenimientos', 'HojasDeVidaMantenimientoController');
+    // Maintenance
+    Route::delete('maintenances/destroy', 'MaintenanceController@massDestroy')->name('maintenances.massDestroy');
+    Route::post('maintenances/parse-csv-import', 'MaintenanceController@parseCsvImport')->name('maintenances.parseCsvImport');
+    Route::post('maintenances/process-csv-import', 'MaintenanceController@processCsvImport')->name('maintenances.processCsvImport');
+    Route::resource('maintenances', 'MaintenanceController');
+
+    // Atencion Al Usuario
+    Route::delete('atencion-al-usuarios/destroy', 'AtencionAlUsuarioController@massDestroy')->name('atencion-al-usuarios.massDestroy');
+    Route::resource('atencion-al-usuarios', 'AtencionAlUsuarioController');
+
+    // Grupos
+    Route::delete('grupos/destroy', 'GruposController@massDestroy')->name('grupos.massDestroy');
+    Route::post('grupos/parse-csv-import', 'GruposController@parseCsvImport')->name('grupos.parseCsvImport');
+    Route::post('grupos/process-csv-import', 'GruposController@processCsvImport')->name('grupos.processCsvImport');
+    Route::resource('grupos', 'GruposController');
+
+    // Ficha Tecnica
+    Route::delete('ficha-tecnicas/destroy', 'FichaTecnicaController@massDestroy')->name('ficha-tecnicas.massDestroy');
+    Route::post('ficha-tecnicas/media', 'FichaTecnicaController@storeMedia')->name('ficha-tecnicas.storeMedia');
+    Route::post('ficha-tecnicas/ckmedia', 'FichaTecnicaController@storeCKEditorImages')->name('ficha-tecnicas.storeCKEditorImages');
+    Route::post('ficha-tecnicas/parse-csv-import', 'FichaTecnicaController@parseCsvImport')->name('ficha-tecnicas.parseCsvImport');
+    Route::post('ficha-tecnicas/process-csv-import', 'FichaTecnicaController@processCsvImport')->name('ficha-tecnicas.processCsvImport');
+    Route::resource('ficha-tecnicas', 'FichaTecnicaController');
+
+    // Reparacion
+    Route::delete('reparacions/destroy', 'ReparacionController@massDestroy')->name('reparacions.massDestroy');
+    Route::post('reparacions/parse-csv-import', 'ReparacionController@parseCsvImport')->name('reparacions.parseCsvImport');
+    Route::post('reparacions/process-csv-import', 'ReparacionController@processCsvImport')->name('reparacions.processCsvImport');
+    Route::resource('reparacions', 'ReparacionController');
+
+    // Financiera
+    Route::delete('financieras/destroy', 'FinancieraController@massDestroy')->name('financieras.massDestroy');
+    Route::resource('financieras', 'FinancieraController');
+
+    // Administracion
+    Route::delete('administracions/destroy', 'AdministracionController@massDestroy')->name('administracions.massDestroy');
+    Route::resource('administracions', 'AdministracionController');
+
+    // Calidad
+    Route::delete('calidads/destroy', 'CalidadController@massDestroy')->name('calidads.massDestroy');
+    Route::resource('calidads', 'CalidadController');
+
+    // Admisiones
+    Route::delete('admisiones/destroy', 'AdmisionesController@massDestroy')->name('admisiones.massDestroy');
+    Route::resource('admisiones', 'AdmisionesController');
+
+    // Promocion Institucional
+    Route::delete('promocion-institucionals/destroy', 'PromocionInstitucionalController@massDestroy')->name('promocion-institucionals.massDestroy');
+    Route::resource('promocion-institucionals', 'PromocionInstitucionalController');
+
+    // Convenio Men
+    Route::delete('convenio-men/destroy', 'ConvenioMenController@massDestroy')->name('convenio-men.massDestroy');
+    Route::resource('convenio-men', 'ConvenioMenController');
+
+    // Sae
+    Route::delete('saes/destroy', 'SaeController@massDestroy')->name('saes.massDestroy');
+    Route::resource('saes', 'SaeController');
+
+    // Bienestar
+    Route::delete('bienestars/destroy', 'BienestarController@massDestroy')->name('bienestars.massDestroy');
+    Route::resource('bienestars', 'BienestarController');
+
+    // Biblioteca
+    Route::delete('bibliotecas/destroy', 'BibliotecaController@massDestroy')->name('bibliotecas.massDestroy');
+    Route::resource('bibliotecas', 'BibliotecaController');
+
+    // Pastoral
+    Route::delete('pastorals/destroy', 'PastoralController@massDestroy')->name('pastorals.massDestroy');
+    Route::resource('pastorals', 'PastoralController');
+
+    // Academica
+    Route::delete('academicas/destroy', 'AcademicaController@massDestroy')->name('academicas.massDestroy');
+    Route::resource('academicas', 'AcademicaController');
+
+    // Schoolpack
+    Route::delete('schoolpacks/destroy', 'SchoolpackController@massDestroy')->name('schoolpacks.massDestroy');
+    Route::resource('schoolpacks', 'SchoolpackController');
+
+    // Trendi
+    Route::delete('trendis/destroy', 'TrendiController@massDestroy')->name('trendis.massDestroy');
+    Route::resource('trendis', 'TrendiController');
+
+    // Progrentis
+    Route::delete('progrentis/destroy', 'ProgrentisController@massDestroy')->name('progrentis.massDestroy');
+    Route::resource('progrentis', 'ProgrentisController');
+
+    // Cumpleanos
+    Route::delete('cumpleanos/destroy', 'CumpleanosController@massDestroy')->name('cumpleanos.massDestroy');
+    Route::resource('cumpleanos', 'CumpleanosController');
+
+    // Proyectos Articulados
+    Route::delete('proyectos-articulados/destroy', 'ProyectosArticuladosController@massDestroy')->name('proyectos-articulados.massDestroy');
+    Route::post('proyectos-articulados/media', 'ProyectosArticuladosController@storeMedia')->name('proyectos-articulados.storeMedia');
+    Route::post('proyectos-articulados/ckmedia', 'ProyectosArticuladosController@storeCKEditorImages')->name('proyectos-articulados.storeCKEditorImages');
+    Route::post('proyectos-articulados/parse-csv-import', 'ProyectosArticuladosController@parseCsvImport')->name('proyectos-articulados.parseCsvImport');
+    Route::post('proyectos-articulados/process-csv-import', 'ProyectosArticuladosController@processCsvImport')->name('proyectos-articulados.processCsvImport');
+    Route::resource('proyectos-articulados', 'ProyectosArticuladosController');
 
     // Empleos
     Route::delete('empleos/destroy', 'EmpleosController@massDestroy')->name('empleos.massDestroy');
     Route::post('empleos/media', 'EmpleosController@storeMedia')->name('empleos.storeMedia');
     Route::post('empleos/ckmedia', 'EmpleosController@storeCKEditorImages')->name('empleos.storeCKEditorImages');
+    Route::post('empleos/parse-csv-import', 'EmpleosController@parseCsvImport')->name('empleos.parseCsvImport');
+    Route::post('empleos/process-csv-import', 'EmpleosController@processCsvImport')->name('empleos.processCsvImport');
     Route::resource('empleos', 'EmpleosController');
 
-    Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+    // Sg Sst
+    Route::delete('sg-ssts/destroy', 'SgSstController@massDestroy')->name('sg-ssts.massDestroy');
+    Route::resource('sg-ssts', 'SgSstController');
+
+    // Plan De Formacion
+    Route::delete('plan-de-formacions/destroy', 'PlanDeFormacionController@massDestroy')->name('plan-de-formacions.massDestroy');
+    Route::resource('plan-de-formacions', 'PlanDeFormacionController');
+
+    // Evaluacion De Desempeno
+    Route::delete('evaluacion-de-desempenos/destroy', 'EvaluacionDeDesempenoController@massDestroy')->name('evaluacion-de-desempenos.massDestroy');
+    Route::resource('evaluacion-de-desempenos', 'EvaluacionDeDesempenoController');
+
+    // Hojas De Vida
+    Route::delete('hojas-de-vidas/destroy', 'HojasDeVidaController@massDestroy')->name('hojas-de-vidas.massDestroy');
+    Route::resource('hojas-de-vidas', 'HojasDeVidaController');
+
+    // Certificado Laboral
+    Route::delete('certificado-laborals/destroy', 'CertificadoLaboralController@massDestroy')->name('certificado-laborals.massDestroy');
+    Route::resource('certificado-laborals', 'CertificadoLaboralController');
+
+    // Cerficadodefunciones
+    Route::delete('cerficadodefunciones/destroy', 'CerficadodefuncionesController@massDestroy')->name('cerficadodefunciones.massDestroy');
+    Route::resource('cerficadodefunciones', 'CerficadodefuncionesController');
+
+    // Pruebas Psicotecnicas
+    Route::delete('pruebas-psicotecnicas/destroy', 'PruebasPsicotecnicasController@massDestroy')->name('pruebas-psicotecnicas.massDestroy');
+    Route::resource('pruebas-psicotecnicas', 'PruebasPsicotecnicasController');
+
+    // Candidatos
+    Route::delete('candidatos/destroy', 'CandidatosController@massDestroy')->name('candidatos.massDestroy');
+    Route::post('candidatos/parse-csv-import', 'CandidatosController@parseCsvImport')->name('candidatos.parseCsvImport');
+    Route::post('candidatos/process-csv-import', 'CandidatosController@processCsvImport')->name('candidatos.processCsvImport');
+    Route::resource('candidatos', 'CandidatosController');
+
+    // Documentos Candidatos
+    Route::delete('documentos-candidatos/destroy', 'DocumentosCandidatosController@massDestroy')->name('documentos-candidatos.massDestroy');
+    Route::post('documentos-candidatos/media', 'DocumentosCandidatosController@storeMedia')->name('documentos-candidatos.storeMedia');
+    Route::post('documentos-candidatos/ckmedia', 'DocumentosCandidatosController@storeCKEditorImages')->name('documentos-candidatos.storeCKEditorImages');
+    Route::resource('documentos-candidatos', 'DocumentosCandidatosController');
+
+    // Idiomasgestionhumana
+    Route::delete('idiomasgestionhumanas/destroy', 'IdiomasgestionhumanaController@massDestroy')->name('idiomasgestionhumanas.massDestroy');
+    Route::resource('idiomasgestionhumanas', 'IdiomasgestionhumanaController');
+
+    Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');
     Route::post('messenger', 'MessengerController@storeTopic')->name('messenger.storeTopic');

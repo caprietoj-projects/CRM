@@ -17,26 +17,10 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.empleo.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $empleo->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.empleo.fields.vacante') }}
                         </th>
                         <td>
                             {{ $empleo->vacante }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.empleo.fields.icono') }}
-                        </th>
-                        <td>
-                            {{ $empleo->icono }}
                         </td>
                     </tr>
                     <tr>
@@ -65,18 +49,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.empleo.fields.empresa') }}
-                        </th>
-                        <td>
-                            {{ $empleo->empresa }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.empleo.fields.salario') }}
                         </th>
                         <td>
                             {{ $empleo->salario }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.empleo.fields.empresa') }}
+                        </th>
+                        <td>
+                            {{ $empleo->empresa }}
                         </td>
                     </tr>
                 </tbody>

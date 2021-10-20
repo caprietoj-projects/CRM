@@ -19,19 +19,27 @@ class UpdateEmpleoRequest extends FormRequest
         return [
             'vacante' => [
                 'string',
-                'nullable',
+                'required',
             ],
-            'icono' => [
-                'string',
-                'nullable',
+            'descripcion' => [
+                'required',
+            ],
+            'requisitos' => [
+                'required',
             ],
             'tiempo' => [
                 'string',
-                'nullable',
+                'required',
+            ],
+            'salario' => [
+                'required',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
             ],
             'empresa' => [
                 'string',
-                'nullable',
+                'required',
             ],
         ];
     }

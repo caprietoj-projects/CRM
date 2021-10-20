@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.prioridad.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $prioridad->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.prioridad.fields.tipo_de_prioridad') }}
                         </th>
                         <td>

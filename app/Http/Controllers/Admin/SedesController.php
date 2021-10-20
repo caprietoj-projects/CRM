@@ -40,9 +40,6 @@ class SedesController extends Controller
             ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('sede', function ($row) {
                 return $row->sede ? $row->sede : '';
             });

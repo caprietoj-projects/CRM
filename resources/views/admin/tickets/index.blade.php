@@ -40,73 +40,17 @@
                         {{ trans('cruds.ticket.fields.adjuntar_archivo') }}
                     </th>
                     <th>
-                        {{ trans('cruds.ticket.fields.id_estado') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.ticket.fields.id_asignado') }}
                     </th>
                     <th>
                         {{ trans('cruds.agente.fields.correo') }}
                     </th>
                     <th>
+                        {{ trans('cruds.ticket.fields.estado') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($incidentes as $key => $item)
-                                <option value="{{ $item->tipo_de_incidente }}">{{ $item->tipo_de_incidente }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($prioridads as $key => $item)
-                                <option value="{{ $item->tipo_de_prioridad }}">{{ $item->tipo_de_prioridad }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($sedes as $key => $item)
-                                <option value="{{ $item->sede }}">{{ $item->sede }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($estados as $key => $item)
-                                <option value="{{ $item->estado }}">{{ $item->estado }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($agentes as $key => $item)
-                                <option value="{{ $item->nombre }}">{{ $item->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
                 </tr>
             </thead>
         </table>
@@ -166,9 +110,9 @@
 { data: 'id_prioridad_tipo_de_prioridad', name: 'id_prioridad.tipo_de_prioridad' },
 { data: 'id_sede_sede', name: 'id_sede.sede' },
 { data: 'adjuntar_archivo', name: 'adjuntar_archivo', sortable: false, searchable: false },
-{ data: 'id_estado_estado', name: 'id_estado.estado' },
 { data: 'id_asignado_nombre', name: 'id_asignado.nombre' },
 { data: 'id_asignado.correo', name: 'id_asignado.correo' },
+{ data: 'estado', name: 'estado' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -181,27 +125,6 @@
           .columns.adjust();
   });
   
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
 });
 
 </script>
