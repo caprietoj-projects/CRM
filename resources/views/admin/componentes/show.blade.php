@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.componente.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $componente->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.componente.fields.nombre_del_activo') }}
                         </th>
                         <td>

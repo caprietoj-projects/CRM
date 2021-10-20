@@ -31,6 +31,11 @@ class Agente extends Model
         'deleted_at',
     ];
 
+    public function quienLoRealizaMaintenances()
+    {
+        return $this->hasMany(Maintenance::class, 'quien_lo_realiza_id', 'id');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

@@ -20,6 +20,12 @@ class Ticket extends Model implements HasMedia
     use Auditable;
     use HasFactory;
 
+    public const ESTADO_RADIO = [
+        'abierto'    => 'Abierto',
+        'en proceso' => 'En Proceso',
+        'cerrado'    => 'Cerrado',
+    ];
+
     public $table = 'tickets';
 
     protected $appends = [
@@ -39,9 +45,10 @@ class Ticket extends Model implements HasMedia
         'id_prioridad_id',
         'id_sede_id',
         'comentenos_mas_sobre_su_incidencia',
-        'id_estado_id',
         'id_asignado_id',
+        'solucion',
         'created_at',
+        'estado',
         'updated_at',
         'deleted_at',
         'created_by_id',
@@ -71,11 +78,6 @@ class Ticket extends Model implements HasMedia
     public function getAdjuntarArchivoAttribute()
     {
         return $this->getMedia('adjuntar_archivo')->last();
-    }
-
-    public function id_estado()
-    {
-        return $this->belongsTo(Estado::class, 'id_estado_id');
     }
 
     public function id_asignado()

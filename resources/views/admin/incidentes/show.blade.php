@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.incidente.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $incidente->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.incidente.fields.tipo_de_incidente') }}
                         </th>
                         <td>

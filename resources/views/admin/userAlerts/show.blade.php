@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.userAlert.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $userAlert->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.userAlert.fields.alert_text') }}
                         </th>
                         <td>

@@ -17,13 +17,12 @@ class FichasTecnicasApiController extends Controller
     {
         abort_if(Gate::denies('fichas_tecnica_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FichasTecnicaResource(FichasTecnica::with(['sede', 'componentes', 'quien_lo_realiza', 'created_by'])->get());
+        return new FichasTecnicaResource(FichasTecnica::with(['sede', 'created_by'])->get());
     }
 
     public function store(StoreFichasTecnicaRequest $request)
     {
         $fichasTecnica = FichasTecnica::create($request->all());
-        $fichasTecnica->componentes()->sync($request->input('componentes', []));
 
         return (new FichasTecnicaResource($fichasTecnica))
             ->response()
@@ -34,13 +33,12 @@ class FichasTecnicasApiController extends Controller
     {
         abort_if(Gate::denies('fichas_tecnica_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FichasTecnicaResource($fichasTecnica->load(['sede', 'componentes', 'quien_lo_realiza', 'created_by']));
+        return new FichasTecnicaResource($fichasTecnica->load(['sede', 'created_by']));
     }
 
     public function update(UpdateFichasTecnicaRequest $request, FichasTecnica $fichasTecnica)
     {
         $fichasTecnica->update($request->all());
-        $fichasTecnica->componentes()->sync($request->input('componentes', []));
 
         return (new FichasTecnicaResource($fichasTecnica))
             ->response()

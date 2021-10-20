@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.fichasTecnica.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $fichasTecnica->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.fichasTecnica.fields.encargado') }}
                         </th>
                         <td>
@@ -65,12 +57,42 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.fichasTecnica.fields.componentes') }}
+                            {{ trans('cruds.fichasTecnica.fields.teclado') }}
                         </th>
                         <td>
-                            @foreach($fichasTecnica->componentes as $key => $componentes)
-                                <span class="label label-info">{{ $componentes->nombre_del_activo }}</span>
-                            @endforeach
+                            <input type="checkbox" disabled="disabled" {{ $fichasTecnica->teclado ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.fichasTecnica.fields.mouse') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $fichasTecnica->mouse ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.fichasTecnica.fields.parlantes') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $fichasTecnica->parlantes ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.fichasTecnica.fields.camara') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $fichasTecnica->camara ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.fichasTecnica.fields.telefono_ip') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $fichasTecnica->telefono_ip ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
@@ -79,38 +101,6 @@
                         </th>
                         <td>
                             {{ $fichasTecnica->observaciones }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.fichasTecnica.fields.mantenimiento_preventivo') }}
-                        </th>
-                        <td>
-                            {{ $fichasTecnica->mantenimiento_preventivo }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.fichasTecnica.fields.mantenimiento_correctivo') }}
-                        </th>
-                        <td>
-                            {{ $fichasTecnica->mantenimiento_correctivo }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.fichasTecnica.fields.descripcion_del_mantenimiento') }}
-                        </th>
-                        <td>
-                            {{ $fichasTecnica->descripcion_del_mantenimiento }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.fichasTecnica.fields.quien_lo_realiza') }}
-                        </th>
-                        <td>
-                            {{ $fichasTecnica->quien_lo_realiza->nombre ?? '' }}
                         </td>
                     </tr>
                     <tr>

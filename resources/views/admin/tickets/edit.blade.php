@@ -80,18 +80,6 @@
                 <span class="help-block">{{ trans('cruds.ticket.fields.adjuntar_archivo_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="id_estado_id">{{ trans('cruds.ticket.fields.id_estado') }}</label>
-                <select class="form-control select2 {{ $errors->has('id_estado') ? 'is-invalid' : '' }}" name="id_estado_id" id="id_estado_id">
-                    @foreach($id_estados as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('id_estado_id') ? old('id_estado_id') : $ticket->id_estado->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('id_estado'))
-                    <span class="text-danger">{{ $errors->first('id_estado') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.ticket.fields.id_estado_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="id_asignado_id">{{ trans('cruds.ticket.fields.id_asignado') }}</label>
                 <select class="form-control select2 {{ $errors->has('id_asignado') ? 'is-invalid' : '' }}" name="id_asignado_id" id="id_asignado_id">
                     @foreach($id_asignados as $id => $entry)
@@ -102,6 +90,27 @@
                     <span class="text-danger">{{ $errors->first('id_asignado') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.ticket.fields.id_asignado_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="solucion">{{ trans('cruds.ticket.fields.solucion') }}</label>
+                <textarea class="form-control ckeditor {{ $errors->has('solucion') ? 'is-invalid' : '' }}" name="solucion" id="solucion">{!! old('solucion', $ticket->solucion) !!}</textarea>
+                @if($errors->has('solucion'))
+                    <span class="text-danger">{{ $errors->first('solucion') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.ticket.fields.solucion_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label>{{ trans('cruds.ticket.fields.estado') }}</label>
+                @foreach(App\Models\Ticket::ESTADO_RADIO as $key => $label)
+                    <div class="form-check {{ $errors->has('estado') ? 'is-invalid' : '' }}">
+                        <input class="form-check-input" type="radio" id="estado_{{ $key }}" name="estado" value="{{ $key }}" {{ old('estado', $ticket->estado) === (string) $key ? 'checked' : '' }}>
+                        <label class="form-check-label" for="estado_{{ $key }}">{{ $label }}</label>
+                    </div>
+                @endforeach
+                @if($errors->has('estado'))
+                    <span class="text-danger">{{ $errors->first('estado') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.ticket.fields.estado_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

@@ -22,9 +22,6 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.incidente.fields.id') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.incidente.fields.tipo_de_incidente') }}
                     </th>
                     <th>
@@ -83,12 +80,11 @@
     ajax: "{{ route('admin.incidentes.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'tipo_de_incidente', name: 'tipo_de_incidente' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-Incidente').DataTable(dtOverrideGlobals);

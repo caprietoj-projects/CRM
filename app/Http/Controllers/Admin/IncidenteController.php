@@ -40,9 +40,6 @@ class IncidenteController extends Controller
             ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('tipo_de_incidente', function ($row) {
                 return $row->tipo_de_incidente ? $row->tipo_de_incidente : '';
             });

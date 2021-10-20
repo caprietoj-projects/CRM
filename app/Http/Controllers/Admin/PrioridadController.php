@@ -40,9 +40,6 @@ class PrioridadController extends Controller
             ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
             $table->editColumn('tipo_de_prioridad', function ($row) {
                 return $row->tipo_de_prioridad ? $row->tipo_de_prioridad : '';
             });

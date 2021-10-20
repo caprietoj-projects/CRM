@@ -10,24 +10,16 @@
         <form method="POST" action="{{ route("admin.empleos.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="vacante">{{ trans('cruds.empleo.fields.vacante') }}</label>
-                <input class="form-control {{ $errors->has('vacante') ? 'is-invalid' : '' }}" type="text" name="vacante" id="vacante" value="{{ old('vacante', '') }}">
+                <label class="required" for="vacante">{{ trans('cruds.empleo.fields.vacante') }}</label>
+                <input class="form-control {{ $errors->has('vacante') ? 'is-invalid' : '' }}" type="text" name="vacante" id="vacante" value="{{ old('vacante', '') }}" required>
                 @if($errors->has('vacante'))
                     <span class="text-danger">{{ $errors->first('vacante') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.empleo.fields.vacante_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="icono">{{ trans('cruds.empleo.fields.icono') }}</label>
-                <input class="form-control {{ $errors->has('icono') ? 'is-invalid' : '' }}" type="text" name="icono" id="icono" value="{{ old('icono', '') }}">
-                @if($errors->has('icono'))
-                    <span class="text-danger">{{ $errors->first('icono') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.empleo.fields.icono_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="descripcion">{{ trans('cruds.empleo.fields.descripcion') }}</label>
-                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion">{{ old('descripcion') }}</textarea>
+                <label class="required" for="descripcion">{{ trans('cruds.empleo.fields.descripcion') }}</label>
+                <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}" name="descripcion" id="descripcion" required>{{ old('descripcion') }}</textarea>
                 @if($errors->has('descripcion'))
                     <span class="text-danger">{{ $errors->first('descripcion') }}</span>
                 @endif
@@ -42,28 +34,28 @@
                 <span class="help-block">{{ trans('cruds.empleo.fields.requisitos_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="tiempo">{{ trans('cruds.empleo.fields.tiempo') }}</label>
-                <input class="form-control {{ $errors->has('tiempo') ? 'is-invalid' : '' }}" type="text" name="tiempo" id="tiempo" value="{{ old('tiempo', '') }}">
+                <label class="required" for="tiempo">{{ trans('cruds.empleo.fields.tiempo') }}</label>
+                <input class="form-control {{ $errors->has('tiempo') ? 'is-invalid' : '' }}" type="text" name="tiempo" id="tiempo" value="{{ old('tiempo', '') }}" required>
                 @if($errors->has('tiempo'))
                     <span class="text-danger">{{ $errors->first('tiempo') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.empleo.fields.tiempo_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="empresa">{{ trans('cruds.empleo.fields.empresa') }}</label>
-                <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}">
-                @if($errors->has('empresa'))
-                    <span class="text-danger">{{ $errors->first('empresa') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.empleo.fields.empresa_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="salario">{{ trans('cruds.empleo.fields.salario') }}</label>
-                <input class="form-control {{ $errors->has('salario') ? 'is-invalid' : '' }}" type="number" name="salario" id="salario" value="{{ old('salario', '') }}" step="0.01">
+                <label class="required" for="salario">{{ trans('cruds.empleo.fields.salario') }}</label>
+                <input class="form-control {{ $errors->has('salario') ? 'is-invalid' : '' }}" type="number" name="salario" id="salario" value="{{ old('salario', '') }}" step="1" required>
                 @if($errors->has('salario'))
                     <span class="text-danger">{{ $errors->first('salario') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.empleo.fields.salario_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="empresa">{{ trans('cruds.empleo.fields.empresa') }}</label>
+                <input class="form-control {{ $errors->has('empresa') ? 'is-invalid' : '' }}" type="text" name="empresa" id="empresa" value="{{ old('empresa', '') }}" required>
+                @if($errors->has('empresa'))
+                    <span class="text-danger">{{ $errors->first('empresa') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.empleo.fields.empresa_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

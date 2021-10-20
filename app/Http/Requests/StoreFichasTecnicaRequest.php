@@ -37,24 +37,6 @@ class StoreFichasTecnicaRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'componentes.*' => [
-                'integer',
-            ],
-            'componentes' => [
-                'array',
-            ],
-            'mantenimiento_preventivo' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'mantenimiento_correctivo' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'quien_lo_realiza_id' => [
-                'required',
-                'integer',
-            ],
             'estado_del_activo' => [
                 'required',
             ],

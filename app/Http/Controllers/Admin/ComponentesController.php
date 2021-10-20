@@ -11,18 +11,48 @@ use App\Models\Componente;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class ComponentesController extends Controller
 {
     use CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('componente_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $componentes = Componente::with(['created_by'])->get();
+        if ($request->ajax()) {
+            $query = Componente::with(['created_by'])->select(sprintf('%s.*', (new Componente())->table));
+            $table = Datatables::of($query);
 
-        return view('admin.componentes.index', compact('componentes'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'componente_show';
+                $editGate = 'componente_edit';
+                $deleteGate = 'componente_delete';
+                $crudRoutePart = 'componentes';
+
+                return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
+            });
+
+            $table->editColumn('nombre_del_activo', function ($row) {
+                return $row->nombre_del_activo ? $row->nombre_del_activo : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.componentes.index');
     }
 
     public function create()

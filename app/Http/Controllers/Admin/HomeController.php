@@ -57,7 +57,6 @@ class HomeController
             'fields'                => [
                 'nombre'      => '',
                 'id_sede'     => 'sede',
-                'id_estado'   => 'estado',
                 'created_at'  => '',
                 'updated_at'  => '',
                 'deleted_at'  => '',

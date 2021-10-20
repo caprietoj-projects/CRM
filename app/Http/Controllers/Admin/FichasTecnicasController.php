@@ -7,8 +7,6 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyFichasTecnicaRequest;
 use App\Http\Requests\StoreFichasTecnicaRequest;
 use App\Http\Requests\UpdateFichasTecnicaRequest;
-use App\Models\Agente;
-use App\Models\Componente;
 use App\Models\FichasTecnica;
 use App\Models\Sede;
 use Gate;
@@ -25,7 +23,7 @@ class FichasTecnicasController extends Controller
         abort_if(Gate::denies('fichas_tecnica_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = FichasTecnica::with(['sede', 'componentes', 'quien_lo_realiza', 'created_by'])->select(sprintf('%s.*', (new FichasTecnica())->table));
+            $query = FichasTecnica::with(['sede', 'created_by'])->select(sprintf('%s.*', (new FichasTecnica())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -62,30 +60,14 @@ class FichasTecnicasController extends Controller
                 return $row->sede ? $row->sede->sede : '';
             });
 
-            $table->editColumn('componentes', function ($row) {
-                $labels = [];
-                foreach ($row->componentes as $componente) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $componente->nombre_del_activo);
-                }
-
-                return implode(' ', $labels);
+            $table->editColumn('telefono_ip', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->telefono_ip ? 'checked' : null) . '>';
             });
-            $table->editColumn('observaciones', function ($row) {
-                return $row->observaciones ? $row->observaciones : '';
-            });
-
-            $table->editColumn('descripcion_del_mantenimiento', function ($row) {
-                return $row->descripcion_del_mantenimiento ? $row->descripcion_del_mantenimiento : '';
-            });
-            $table->addColumn('quien_lo_realiza_nombre', function ($row) {
-                return $row->quien_lo_realiza ? $row->quien_lo_realiza->nombre : '';
-            });
-
             $table->editColumn('estado_del_activo', function ($row) {
                 return $row->estado_del_activo ? FichasTecnica::ESTADO_DEL_ACTIVO_RADIO[$row->estado_del_activo] : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'sede', 'componentes', 'quien_lo_realiza']);
+            $table->rawColumns(['actions', 'placeholder', 'sede', 'telefono_ip']);
 
             return $table->make(true);
         }
@@ -99,17 +81,12 @@ class FichasTecnicasController extends Controller
 
         $sedes = Sede::pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $componentes = Componente::pluck('nombre_del_activo', 'id');
-
-        $quien_lo_realizas = Agente::pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.fichasTecnicas.create', compact('sedes', 'componentes', 'quien_lo_realizas'));
+        return view('admin.fichasTecnicas.create', compact('sedes'));
     }
 
     public function store(StoreFichasTecnicaRequest $request)
     {
         $fichasTecnica = FichasTecnica::create($request->all());
-        $fichasTecnica->componentes()->sync($request->input('componentes', []));
 
         return redirect()->route('admin.fichas-tecnicas.index');
     }
@@ -120,19 +97,14 @@ class FichasTecnicasController extends Controller
 
         $sedes = Sede::pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $componentes = Componente::pluck('nombre_del_activo', 'id');
+        $fichasTecnica->load('sede', 'created_by');
 
-        $quien_lo_realizas = Agente::pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $fichasTecnica->load('sede', 'componentes', 'quien_lo_realiza', 'created_by');
-
-        return view('admin.fichasTecnicas.edit', compact('sedes', 'componentes', 'quien_lo_realizas', 'fichasTecnica'));
+        return view('admin.fichasTecnicas.edit', compact('sedes', 'fichasTecnica'));
     }
 
     public function update(UpdateFichasTecnicaRequest $request, FichasTecnica $fichasTecnica)
     {
         $fichasTecnica->update($request->all());
-        $fichasTecnica->componentes()->sync($request->input('componentes', []));
 
         return redirect()->route('admin.fichas-tecnicas.index');
     }
@@ -141,7 +113,7 @@ class FichasTecnicasController extends Controller
     {
         abort_if(Gate::denies('fichas_tecnica_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fichasTecnica->load('sede', 'componentes', 'quien_lo_realiza', 'created_by');
+        $fichasTecnica->load('sede', 'created_by');
 
         return view('admin.fichasTecnicas.show', compact('fichasTecnica'));
     }

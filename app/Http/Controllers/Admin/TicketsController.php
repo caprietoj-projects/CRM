@@ -8,12 +8,10 @@ use App\Http\Requests\MassDestroyTicketRequest;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\Models\Agente;
-use App\Models\Estado;
 use App\Models\Incidente;
 use App\Models\Prioridad;
 use App\Models\Sede;
 use App\Models\Ticket;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -29,7 +27,7 @@ class TicketsController extends Controller
         abort_if(Gate::denies('ticket_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Ticket::with(['id_incidente', 'id_prioridad', 'id_sede', 'id_estado', 'id_asignado', 'created_by'])->select(sprintf('%s.*', (new Ticket())->table));
+            $query = Ticket::with(['id_incidente', 'id_prioridad', 'id_sede', 'id_asignado', 'created_by'])->select(sprintf('%s.*', (new Ticket())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -71,10 +69,6 @@ class TicketsController extends Controller
             $table->editColumn('adjuntar_archivo', function ($row) {
                 return $row->adjuntar_archivo ? '<a href="' . $row->adjuntar_archivo->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
-            $table->addColumn('id_estado_estado', function ($row) {
-                return $row->id_estado ? $row->id_estado->estado : '';
-            });
-
             $table->addColumn('id_asignado_nombre', function ($row) {
                 return $row->id_asignado ? $row->id_asignado->nombre : '';
             });
@@ -82,20 +76,16 @@ class TicketsController extends Controller
             $table->editColumn('id_asignado.correo', function ($row) {
                 return $row->id_asignado ? (is_string($row->id_asignado) ? $row->id_asignado : $row->id_asignado->correo) : '';
             });
+            $table->editColumn('estado', function ($row) {
+                return $row->estado ? Ticket::ESTADO_RADIO[$row->estado] : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'id_incidente', 'id_prioridad', 'id_sede', 'adjuntar_archivo', 'id_estado', 'id_asignado']);
+            $table->rawColumns(['actions', 'placeholder', 'id_incidente', 'id_prioridad', 'id_sede', 'adjuntar_archivo', 'id_asignado']);
 
             return $table->make(true);
         }
 
-        $incidentes = Incidente::get();
-        $prioridads = Prioridad::get();
-        $sedes      = Sede::get();
-        $estados    = Estado::get();
-        $agentes    = Agente::get();
-        $users      = User::get();
-
-        return view('admin.tickets.index', compact('incidentes', 'prioridads', 'sedes', 'estados', 'agentes', 'users'));
+        return view('admin.tickets.index');
     }
 
     public function create()
@@ -108,9 +98,7 @@ class TicketsController extends Controller
 
         $id_sedes = Sede::pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $id_estados = Estado::pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.tickets.create', compact('id_incidentes', 'id_prioridads', 'id_sedes', 'id_estados'));
+        return view('admin.tickets.create', compact('id_incidentes', 'id_prioridads', 'id_sedes'));
     }
 
     public function store(StoreTicketRequest $request)
@@ -138,13 +126,11 @@ class TicketsController extends Controller
 
         $id_sedes = Sede::pluck('sede', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $id_estados = Estado::pluck('estado', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $id_asignados = Agente::pluck('nombre', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $ticket->load('id_incidente', 'id_prioridad', 'id_sede', 'id_estado', 'id_asignado', 'created_by');
+        $ticket->load('id_incidente', 'id_prioridad', 'id_sede', 'id_asignado', 'created_by');
 
-        return view('admin.tickets.edit', compact('id_incidentes', 'id_prioridads', 'id_sedes', 'id_estados', 'id_asignados', 'ticket'));
+        return view('admin.tickets.edit', compact('id_incidentes', 'id_prioridads', 'id_sedes', 'id_asignados', 'ticket'));
     }
 
     public function update(UpdateTicketRequest $request, Ticket $ticket)
@@ -169,7 +155,7 @@ class TicketsController extends Controller
     {
         abort_if(Gate::denies('ticket_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $ticket->load('id_incidente', 'id_prioridad', 'id_sede', 'id_estado', 'id_asignado', 'created_by');
+        $ticket->load('id_incidente', 'id_prioridad', 'id_sede', 'id_asignado', 'created_by');
 
         return view('admin.tickets.show', compact('ticket'));
     }

@@ -41,22 +41,7 @@
                         {{ trans('cruds.fichasTecnica.fields.sede') }}
                     </th>
                     <th>
-                        {{ trans('cruds.fichasTecnica.fields.componentes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fichasTecnica.fields.observaciones') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fichasTecnica.fields.mantenimiento_preventivo') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fichasTecnica.fields.mantenimiento_correctivo') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fichasTecnica.fields.descripcion_del_mantenimiento') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fichasTecnica.fields.quien_lo_realiza') }}
+                        {{ trans('cruds.fichasTecnica.fields.telefono_ip') }}
                     </th>
                     <th>
                         {{ trans('cruds.fichasTecnica.fields.estado_del_activo') }}
@@ -122,17 +107,12 @@
 { data: 'modelo', name: 'modelo' },
 { data: 'serial', name: 'serial' },
 { data: 'sede_sede', name: 'sede.sede' },
-{ data: 'componentes', name: 'componentes.nombre_del_activo' },
-{ data: 'observaciones', name: 'observaciones' },
-{ data: 'mantenimiento_preventivo', name: 'mantenimiento_preventivo' },
-{ data: 'mantenimiento_correctivo', name: 'mantenimiento_correctivo' },
-{ data: 'descripcion_del_mantenimiento', name: 'descripcion_del_mantenimiento' },
-{ data: 'quien_lo_realiza_nombre', name: 'quien_lo_realiza.nombre' },
+{ data: 'telefono_ip', name: 'telefono_ip' },
 { data: 'estado_del_activo', name: 'estado_del_activo' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-FichasTecnica').DataTable(dtOverrideGlobals);
